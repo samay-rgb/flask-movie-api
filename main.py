@@ -5,9 +5,11 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import difflib
 import requests
+from flask_cors import CORS
 import json
 df = pd.read_csv('final_movies.csv')
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/")

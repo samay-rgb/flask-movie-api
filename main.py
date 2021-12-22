@@ -5,8 +5,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import difflib
 import requests
-from flask_cors import CORS
 import json
+from flask_cors import CORS
 df = pd.read_csv('final_movies.csv')
 app = Flask(__name__)
 CORS(app)
@@ -17,19 +17,16 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
-@app.route("/movielist/<string:imdb_id>")
-def get_movie_list(imdb_id):
+@app.route("/movielist")
+def get_movie_list():
     df = pd.read_csv('final_movies.csv')
 
-    d = (df.loc[df['imdb_title_id'] == imdb_id]).values
+    d = list((df['original_title']).values)
     if(len(d) == 0):
         return jsonify(None)
-    result = {}
-    for i, j in zip(df, d[0]):
-        if i == "Unnamed: 0":
-            i = 'index'
-        result[i] = j
-    return jsonify(result)
+    # result = {}
+
+    return jsonify(d)
 
 
 @app.route("/similarity/<string:imdb_id>")
